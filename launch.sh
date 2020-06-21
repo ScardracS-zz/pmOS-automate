@@ -1,8 +1,10 @@
 # TODO
 # AUTOMATE THE ALIASES IN ORDER TO SET ONCE AND FOR ALL
+# ADD THE ABILITY TO ADD -c VALUES DIRECTLY ON SH LIKE OTHER VALUES
 echo "Hi there! I am a simply script created by @ScardracS."
-echo "I will check if your folders are set up and programs upgraded as well in order to build pmOS."
+echo "I will check if your folders are set up and programs on pmbootstrap upgraded as well in order to build pmOS."
 echo "Be sure you have git and adb installed."
+
 	#Verify if code/linux and code/pmbootstrap are already on your home folder.
 	A=~/code/pmbootstrap
 	B=~/code/linux
@@ -34,7 +36,7 @@ echo "Be sure you have git and adb installed."
 
 	#Setup aliases
 	cd ~/code/pmbootstrap
-	alias pmbootstrap=pmboostrap.py
+	alias pmbootstrap=pmbootstrap.py
 
 	#Start the build of pmOS
 	cd ~/code/linux
