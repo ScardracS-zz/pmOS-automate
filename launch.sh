@@ -5,7 +5,7 @@
 	echo "I will check if your folders are set up and programs on pmbootstrap upgraded as well in order to build pmOS."
 	echo "Be sure you have git, adb and fastboot installed."
 
-#Verify if code/linux and code/pmbootstrap are already on your home folder.
+# Verify if code/linux and code/pmbootstrap are already on your home folder.
 	A=~/code/pmbootstrap
 	B=~/code/linux
 
@@ -13,8 +13,7 @@
 		alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py
 	else
 		mkdir ~/code
-		cd ~/code
-		git clone https://gitlab.com/postmarketOS/pmbootstrap
+		git clone https://gitlab.com/postmarketOS/pmbootstrap ~/code/pmbootstrap
 		alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py
 		pmbootstrap chroot -- apk add abootimg android-tools mkbootimg dtbtool
 		mkdir ~/code/.installed
@@ -26,22 +25,18 @@
 	if test -e "$B"; then
 		cd
 	else
-		cd ~/code
-		echo "Which GIT do you want to take as linux folder?"
-		echo "Copy the 'Clone with HTTPS' on GitLab or GitHub and put here."
-		read GIT
-		git clone $GIT
-		echo "Write the exact name of git folder"
-		read FOLDER
-		mv $FOLDER linux
+		echo "Which GIT do you want to take as linux folder? Put here the link."
+		echo "Are accepted both HTTPS and git@git links."
+		read C
+		git clone $C ~/code/linux
 	fi
 
-#Start the build of pmOS
+# Start the build of pmOS
 	cd ~/code/linux
 	source ~/code/pmbootstrap/helpers/envkernel.sh
 	echo "Which device do you want to compile? Be sure to know the exact defconfig name, for eg: omap4_samsung_maguro_defconfig"
-	read DEFCONFIG
-	make $DEFCONFIG
+	read D
+	make $D
 	make -j6
 	pmbootstrap export
 	export DEVICE="$(pmbootstrap config device)"
@@ -51,9 +46,8 @@
 	cd ~/code/linux/.output/arch/arm/boot
 	ls dts
 	echo "Write the name of your DTB file in order to continue the build. For eg: omap4-samsung-maguro.dtb"
-	read DTB
-	cat zImage dts/$DTB > ~/code/linux/.zImage-dtb
-	cp ~/code/linux/.zImage-dtb "$TEMP"/zImage-dtb
+	read E
+	cat zImage dts/$E > "$TEMP"/zImage-dtb
 	cp "/tmp/postmarketOS-export/boot.img-$DEVICE" "$TEMP/boot.img"
 
 # Again: be sure to check these values for your device!
