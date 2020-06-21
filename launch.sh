@@ -5,7 +5,7 @@ echo "First thing to do is to install git, so please install it on your system a
 read -n 1 -r -s -p $"Press ENTER to continue the script"
 if test -e "$A"; then
 	cd ~/code/pmbootstrap
-else mkdir -p ~/code && cd code && git clone https://gitlab.com/postmarketOS/pmbootstrap
+else mkdir -p ~/code && cd code && git clone https://gitlab.com/postmarketOS/pmbootstrap && pmbootstrap chroot -- apk upgrade && apk add abootimg android-tools mkbootimg dtbtool
 fi
 	alias pmbootstrap=pmboostrap.py
 	git pull
