@@ -10,14 +10,12 @@
 	B=~/code/linux
 
 	if test -e "$A"; then
-		cd ~/code/pmbootstrap
-		alias pmbootstrap=pmbootstrap.py
+		alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py
 	else
 		mkdir ~/code
 		cd ~/code
 		git clone https://gitlab.com/postmarketOS/pmbootstrap
-		cd ~/code/pmbootstrap
-		alias pmbootstrap=pmbootstrap.py
+		alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py
 		pmbootstrap chroot -- apk add abootimg android-tools mkbootimg dtbtool
 		mkdir ~/code/.installed
 	fi
