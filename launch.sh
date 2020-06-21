@@ -11,18 +11,19 @@
 
 	if test -e "$A"; then
 		cd ~/code/pmbootstrap
+		alias pmbootstrap=pmbootstrap.py
 	else
 		mkdir ~/code
 		cd ~/code
 		git clone https://gitlab.com/postmarketOS/pmbootstrap
 		cd ~/code/pmbootstrap
+		alias pmbootstrap=pmbootstrap.py
 		pmbootstrap chroot -- apk add abootimg android-tools mkbootimg dtbtool
 		mkdir ~/code/.installed
 	fi
 
 # Check everytime for pmbootstrap update in order to be sure everything is working as it should
 	pmbootstrap chroot -- apk upgrade
-	alias pmbootstrap=pmbootstrap.py
 	git pull
 	if test -e "$B"; then
 		cd
