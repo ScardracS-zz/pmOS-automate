@@ -9,34 +9,29 @@ echo "Be sure you have git and adb installed."
 	A=~/code/pmbootstrap
 	B=~/code/linux
 	if test -e "$A"; then
-		cp commands.sh ~/code/commands.sh
 		cd ~/code/pmbootstrap
 	else
 		mkdir ~/code
-		cp commands.sh ~/code/commands.sh
 		cd ~/code
 		git clone https://gitlab.com/postmarketOS/pmbootstrap
 		cd ~/code/pmbootstrap
 		pmbootstrap chroot -- apk upgrade
 		pmbootstrap chroot -- apk add abootimg android-tools mkbootimg dtbtool
 	fi
+		alias pmbootstrap=pmbootstrap.py
 		git pull
 		if test -e "$B"; then
 			cd
 		else
 			cd ~/code
 			echo "Which GIT do you want to take as linux folder?"
-			echo "Copy the ''Clone with HTTPS'' on GitLab or GitHub and put here."
+			echo "Copy the 'Clone with HTTPS' on GitLab or GitHub and put here."
 			read GIT
 			git clone $GIT
 			echo "Write the exact name of git folder"
 			read FOLDER
 			mv $FOLDER linux
 	fi
-
-	#Setup aliases
-	cd ~/code/pmbootstrap
-	alias pmbootstrap=pmbootstrap.py
 
 	#Start the build of pmOS
 	cd ~/code/linux
