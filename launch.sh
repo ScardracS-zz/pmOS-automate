@@ -1,20 +1,51 @@
 # TODO
 # AUTOMATE THE ALIASES IN ORDER TO SET ONCE AND FOR ALL
-# ADD THE ABILITY TO ADD -c VALUES DIRECTLY ON SH LIKE OTHER VALUES
+# ADD THE ABILITY TO ADD -c VALUES DIRECTLY ON SH LIKE OTHER COMMANDS
 	echo "Hi there! I am a simply script created by @ScardracS."
 	echo "I will check if your folders are set up and programs on pmbootstrap upgraded as well in order to build pmOS."
 	echo "Be sure you have git, adb and fastboot installed."
+	
+# Set global git pull in order to fix any possible problem when updating pmbootstrap
+git config --global pull.rebase false
+
+# Check if aliases is set on shell
+clear
+echo "Which shell do you use?"
+echo "BASH or ZSH?"
+echo "NB: write the answer in UPPERCASE"
+read shell
+case $shell in
+	BASH) 
+		W=~/.bashrc
+		if grep -q alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py "$W"; then
+		 	echo "Aliases already set. Skipping..."
+		 else 
+		 	echo "alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py" >> ~/.bashrc
+		fi
+	;;
+	
+	ZSH) 
+		Z=~/.zshrc
+		if grep -q alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py "$Z"; then
+		 	echo "Aliases already set. Skipping..."
+		 else 
+		 	echo "alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py" >> ~/.zshrc
+		fi
+	;;
+esac
+clear
 
 # Verify if code/linux and code/pmbootstrap are already on your home folder.
 	A=~/code/pmbootstrap
 	B=~/code/linux
 
 	if test -e "$A"; then
-		alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py
+		echo "pmbootstrap's folder exist. Skipping..."
 	else
 		mkdir ~/code
 		git clone https://gitlab.com/postmarketOS/pmbootstrap ~/code/pmbootstrap
-		alias pmbootstrap=~/code/pmbootstrap/pmbootstrap.py
+		mkdir -p ~/.local/var/pmbootstrap
+		pmbootstrap init
 		pmbootstrap chroot -- apk add abootimg android-tools mkbootimg dtbtool
 		mkdir ~/code/.installed
 	fi
@@ -23,7 +54,7 @@
 	pmbootstrap chroot -- apk upgrade
 	git pull
 	if test -e "$B"; then
-		cd
+		echo "linux's folder exist. Skipping..."
 	else
 		echo "Which GIT do you want to take as linux folder? Put here the link."
 		echo "Are accepted both HTTPS and git@git links."
